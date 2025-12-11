@@ -1,0 +1,233 @@
+[
+    {
+        "src": "image\/gallery_pics\/1.jpg",
+        "alt": "Sunset Over Mountains",
+        "caption": "Sunset Over Mountains",
+        "category": "coal",
+        "id": 1
+    },
+    {
+        "src": "image\/gallery_pics\/2.jpg",
+        "alt": "Blooming Spring",
+        "caption": "Blooming Spring",
+        "category": "aquarelle",
+        "id": 2
+    },
+    {
+        "src": "image\/gallery_pics\/3.jpg",
+        "alt": "Coal Study 2022",
+        "caption": "Coal Study 2022",
+        "category": "aquarelle",
+        "id": 3
+    },
+    {
+        "src": "image\/gallery_pics\/4.jpeg",
+        "alt": "Mystic Forest",
+        "caption": "Mystic Forest",
+        "category": "coal",
+        "id": 4
+    },
+    {
+        "src": "image\/gallery_pics\/5.jpg",
+        "alt": "Golden Horizon",
+        "caption": "Golden Horizon",
+        "category": "aquarelle",
+        "id": 5
+    },
+    {
+        "src": "image\/gallery_pics\/6.jpg",
+        "alt": "Morning Dew",
+        "caption": "Morning Dew",
+        "category": "oil",
+        "id": 6
+    },
+    {
+        "src": "image\/gallery_pics\/7.jpg",
+        "alt": "Charcoal Sketch",
+        "caption": "Charcoal Sketch",
+        "category": "oil",
+        "id": 7
+    },
+    {
+        "src": "image\/gallery_pics\/8.jpeg",
+        "alt": "Evening Glow",
+        "caption": "Evening Glow",
+        "category": "coal",
+        "id": 8
+    },
+    {
+        "src": "image\/gallery_pics\/9.jpg",
+        "alt": "Ocean Breeze",
+        "caption": "Ocean Breeze",
+        "category": "oil",
+        "id": 9
+    },
+    {
+        "src": "image\/gallery_pics\/10.jpg",
+        "alt": "Sunlit Path",
+        "caption": "Sunlit Path",
+        "category": "oil",
+        "id": 10
+    },
+    {
+        "src": "image\/gallery_pics\/11.jpg",
+        "alt": "Coal Study 2014",
+        "caption": "Coal Study 2014",
+        "category": "oil",
+        "id": 11
+    },
+    {
+        "src": "image\/gallery_pics\/12.jpg",
+        "alt": "Gentle River",
+        "caption": "Gentle River",
+        "category": "aquarelle",
+        "id": 12
+    },
+    {
+        "src": "image\/gallery_pics\/13.jpg",
+        "alt": "Winter Calm",
+        "caption": "Winter Calm",
+        "category": "aquarelle",
+        "id": 13
+    },
+    {
+        "src": "image\/gallery_pics\/14.jpg",
+        "alt": "Autumn Leaves",
+        "caption": "Autumn Leaves",
+        "category": "oil",
+        "id": 14
+    },
+    {
+        "src": "image\/gallery_pics\/15.jpg",
+        "alt": "Coal Study 2010",
+        "caption": "Coal Study 2010",
+        "category": "oil",
+        "id": 15
+    },
+    {
+        "src": "image\/gallery_pics\/16.jpg",
+        "alt": "Misty Morning",
+        "caption": "Misty Morning",
+        "category": "oil",
+        "id": 16
+    },
+    {
+        "src": "image\/gallery_pics\/17.jpg",
+        "alt": "Sunset Glory",
+        "caption": "Sunset Glory",
+        "category": "oil",
+        "id": 17
+    },
+    {
+        "src": "image\/gallery_pics\/18.jpg",
+        "alt": "Spring Fields",
+        "caption": "Spring Fields",
+        "category": "oil",
+        "id": 18
+    },
+    {
+        "src": "image\/gallery_pics\/19.jpg",
+        "alt": "Coal Study 2006",
+        "caption": "Coal Study 2006",
+        "category": "oil",
+        "id": 19
+    },
+    {
+        "src": "image\/gallery_pics\/20.jpg",
+        "alt": "Evening Mist",
+        "caption": "Evening Mist",
+        "category": "coal",
+        "id": 20
+    },
+    {
+        "src": "image\/gallery_pics\/21.jpg",
+        "alt": "Ocean Waves",
+        "caption": "Ocean Waves",
+        "category": "oil",
+        "id": 21
+    },
+    {
+        "src": "image\/gallery_pics\/22.jpg",
+        "alt": "Morning Light",
+        "caption": "Morning Light",
+        "category": "aquarelle",
+        "id": 22
+    },
+    {
+        "src": "image\/gallery_pics\/23.jpg",
+        "alt": "Coal Study 2002",
+        "caption": "Coal Study 2002",
+        "category": "aquarelle",
+        "id": 23
+    },
+    {
+        "src": "image\/gallery_pics\/24.jpg",
+        "alt": "Forest Walk",
+        "caption": "Forest Walk",
+        "category": "mixed",
+        "id": 24
+    },
+    {
+        "src": "image\/gallery_pics\/25.jpg",
+        "alt": "Sunrise Glory",
+        "caption": "Sunrise Glory",
+        "category": "oil",
+        "id": 25
+    },
+    {
+        "src": "image\/gallery_pics\/26.jpg",
+        "alt": "Aquarelle Study 1999",
+        "caption": "Aquarelle Study 1999",
+        "category": "oil",
+        "id": 26
+    },
+    {
+        "src": "image\/gallery_pics\/27.jpg",
+        "alt": "Coal Study 1998",
+        "caption": "Coal Study 1998",
+        "category": "aquarelle",
+        "id": 27
+    },
+    {
+        "src": "image\/gallery_pics\/28.jpg",
+        "alt": "Mixed Media 1997",
+        "caption": "Mixed Media 1997",
+        "category": "aquarelle",
+        "id": 28
+    },
+    {
+        "src": "image\/gallery_pics\/29.jpg",
+        "alt": "Sunset Fields 1996",
+        "caption": "Sunset Fields 1996",
+        "category": "aquarelle",
+        "id": 29
+    },
+    {
+        "src": "image\/gallery_pics\/30.jpg",
+        "alt": "Morning Mist 1995",
+        "caption": "Morning Mist 1995",
+        "category": "aquarelle",
+        "id": 30
+    },
+    {
+        "src": "image\/gallery_pics\/31.jpg",
+        "alt": "Coal Sketch 1994",
+        "caption": "Coal Sketch 1994",
+        "category": "aquarelle",
+        "id": 31
+    },
+    {
+        "src": "image\/gallery_pics\/32.jpg",
+        "alt": "Mixed Study 1993",
+        "caption": "Mixed Study 1993",
+        "category": "aquarelle",
+        "id": 32
+    },
+    {
+        "src": "image\/gallery_pics\/33.jpeg",
+        "alt": "Final Coal Study 1992",
+        "caption": "Final Coal Study 1992",
+        "category": "coal",
+        "id": 33
+    }
+]

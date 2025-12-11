@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title data-translate="contact_page_title">Contact Us</title>
+    <link rel="shortcut icon" href="image/logo.png" type="image/svg+xml">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+    <link rel="stylesheet" href="css/contact_style.css">
+</head>
+<body>
+    <section class="header">
+        <nav>
+            <a href="index.php"><img src="image/logo.png" id="logo-img" alt="logo"></a>
+            <div class="nav-links" id="navLinks">
+                <span class="icon" onclick="hidemenu()">&#10005;</span>
+                <ul>
+                    <li><a href="index.php" data-translate="nav_home">Home</a></li>
+                    <li><a href="#course_call" data-translate="nav_work">Work</a></li>
+                    <li><a href="gallery.html" data-translate="nav_gallery">Gallery</a></li>
+                    <li><a href="Admission_page.php" data-translate="nav_custom_order">Custom order</a></li>
+                    <li><a href="fees_page.php" data-translate="nav_purchase">Purchase painting</a></li>
+                    <li><a href="Contact_page.html" data-translate="nav_contact">Contact</a></li>
+                    <li><a href="#" id="lang-toggle">HR</a></li>
+                </ul>
+            </div> 
+            <span class="icon" onclick="showmenu()">&#9776;</span>
+        </nav>
+
+        <div class="wrapper">
+            <div class="r_form_wrap">
+                <div class="title">
+                    <p data-translate="contact_form_header">Contact form</p>
+                </div>
+                
+                <div class="r_form">
+                    <form id="contactForm">
+                        <div class="input_wrap">
+                            <label for="yourname" data-translate="contact_name_label">Your Name</label>
+                            <div class="input_item">
+                                <i class="fa fa-user" id="icon"></i>
+                                <input type="text" name="yourname" class="input" id="yourname" data-translate-placeholder="contact_name_placeholder" placeholder="Enter the name" required>
+                            </div>
+                        </div>
+
+                        <div class="input_wrap">
+                            <label for="emailaddress" data-translate="contact_email_label">Email Address</label>
+                            <div class="input_item">
+                                <i class="fa fa-envelope" id="icon"></i>
+                                <input type="email" name="emailaddress" class="input" id="emailaddress" data-translate-placeholder="contact_email_placeholder" placeholder="Enter the Email ID" required>
+                            </div>
+                        </div>
+
+                        <div class="input_wrap">
+                            <label for="phone" data-translate="contact_message_label">Message</label>
+                            <div class="input_item">
+                                <i class="fa fa-commenting" id="icon"></i>
+                                <textarea name="phone" class="mess" id="phone" data-translate-placeholder="contact_message_placeholder" placeholder="Write your message..." rows="5"></textarea>
+                            </div>
+                        </div>
+                        
+                        <input type="button" class="button" data-translate="contact_send_button" value="Send Message" onclick="sendmail()">
+                        <input type="reset" class="clear_ad" data-translate="contact_clear_button" value="Clear">
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="none_div"></div>
+
+    <script src="https://cdn.emailjs.com/sdk/3.2.0/email.min.js"></script>
+    <script>
+        // inicijalizacija EmailJS
+        emailjs.init("VBKV3r6XaaFW3B8so");
+
+        function sendmail(){
+            const name = document.getElementById("yourname").value.trim();
+            const email = document.getElementById("emailaddress").value.trim();
+            const message = document.getElementById("phone").value.trim();
+
+            if(!name || !email || !message){
+                alert("Please fill all fields.");
+                return;
+            }
+
+            const templateParams = {
+                from_name: name,
+                from_email: email,
+                message: message
+            };
+
+            emailjs.send("service_iuylq7d", "template_v9c189e", templateParams)
+            .then(function(response) {
+                alert("Poruka je poslana! Hvala.");
+                document.getElementById("contactForm").reset();
+            }, function(error) {
+                alert("Došlo je do greške. Pokušaj kasnije.");
+                console.error(error);
+            });
+        }
+
+        var navLinks = document.getElementById("navLinks");
+        function showmenu(){ navLinks.style.right="0"; }
+        function hidemenu(){ navLinks.style.right="-200px"; }
+    </script>
+
+    <script src="javascript/lang.js"></script>
+</body>
+</html>

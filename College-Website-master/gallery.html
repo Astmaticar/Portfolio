@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title data-translate="gallery_title">Gallery - Barbara Jurić</title>
+  <link rel="shortcut icon" href="image/logo.png" type="image/svg+xml">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="css/gallery.css">
+</head>
+<body>
+<section class="header">
+  <nav>
+    <a href="index.php"><img src="image/logo.png" id="logo-img" alt="logo"></a>
+    <div class="nav-links" id="navLinks">
+      <span class="icon" onclick="hidemenu()">&#10005;</span>
+      <ul>
+        <li><a href="index.php" data-translate="nav_home">Home</a></li>
+        <li><a href="#course_call" data-translate="nav_work">Work</a></li>
+        <li><a href="gallery.html" data-translate="nav_gallery">Gallery</a></li>
+        <li><a href="Admission_page.php" data-translate="nav_custom_order">Custom order</a></li>
+        <li><a href="fees_page.php" data-translate="nav_purchase">Purchase painting</a></li>
+        <li><a href="Contact_page.html" data-translate="nav_contact">Contact</a></li>
+        <li><a href="#" id="lang-toggle">HR</a></li>
+      </ul>
+    </div>
+    <span class="icon" onclick="showmenu()">&#9776;</span>
+  </nav>
+
+  <div class="text-box small">
+    <h1 data-translate="gallery_title">Gallery</h1>
+    <p data-translate="gallery_paragraph">Selected works by Barbara Jurić — explore a curated collection of paintings and studies.</p>
+  </div>
+</section>
+
+<main class="gallery-section">
+  <div class="gallery-navbar">
+    <button class="gallery-btn" data-filter="all" data-translate="gallery_all">All</button>
+    <button class="gallery-btn" data-filter="aquarelle" data-translate="gallery_aquarelle">Aquarelle on paper</button>
+    <button class="gallery-btn" data-filter="oil" data-translate="gallery_oil">Oil on canvas/wood/cardboard</button>
+    <button class="gallery-btn" data-filter="coal" data-translate="gallery_coal">Coal on paper</button>
+  </div>
+
+  <div class="gallery-grid" id="galleryGrid">
+    <!-- slike će se dinamički učitati ovdje -->
+  </div>
+</main>
+
+<!-- Lightbox -->
+<div id="lightbox" class="lightbox">
+  <button class="lb-close" id="lbClose" title="Close">&times;</button>
+  <button class="lb-prev" id="lbPrev" title="Previous">&#10094;</button>
+  <div class="lb-content">
+    <img id="lbImage" src="" alt="">
+    <p id="lbCaption"></p>
+  </div>
+  <button class="lb-next" id="lbNext" title="Next">&#10095;</button>
+</div>
+
+<footer class="footer small-footer">
+  <p data-translate="footer_copyright">© Barbara Jurić — All rights reserved</p>
+</footer>
+
+<script>
+  // NAV
+  var navLinks = document.getElementById("navLinks");
+  function showmenu(){ navLinks.style.right="0"; }
+  function hidemenu(){ navLinks.style.right="-200px"; }
+
+  // GLOBAL VARIABLES
+  let galleryData = [];
+  let allItems = [];
+
+  // Load gallery JSON
+  // Load gallery JSON
+fetch('Poppins/gallery_data.json', {cache: "no-store"})
+  .then(res => res.json())
+  .then(data => {
+    galleryData = data;
+    const grid = document.getElementById('galleryGrid');
+    galleryData.forEach((imgData, index) => {
+      const figure = document.createElement('figure');
+      figure.className = 'gallery-item';
+      figure.dataset.category = imgData.category;
+
+      const img = document.createElement('img');
+      img.src = imgData.src;
+      img.alt = imgData.caption; 
+      img.dataset.index = index; 
+
+      const caption = document.createElement('figcaption');
+      caption.textContent = imgData.caption;
+
+      figure.appendChild(img);
+      figure.appendChild(caption);
+      grid.appendChild(figure);
+    });
+
+    allItems = Array.from(document.querySelectorAll('.gallery-item img'));
+    setupGallery();
+
+    // --- novi kod za hash ---
+    let initialFilter = 'all';
+    if(location.hash) {
+      const hashFilter = location.hash.replace('#','');
+      if(['all','aquarelle','oil','coal'].includes(hashFilter)){
+        initialFilter = hashFilter;
+      }
+    } else {
+      initialFilter = localStorage.getItem('galleryFilter') || 'all';
+    }
+    document.querySelector(`.gallery-btn[data-filter="${initialFilter}"]`)?.click();
+  });
+
+
+  function setupGallery(){
+    const lightbox = document.getElementById('lightbox');
+    const lbImage = document.getElementById('lbImage');
+    const lbCaption = document.getElementById('lbCaption');
+    const lbClose = document.getElementById('lbClose');
+    const lbPrev = document.getElementById('lbPrev');
+    const lbNext = document.getElementById('lbNext');
+    let currentIndex = 0;
+
+    function getVisibleItems() { return allItems.filter(img => img.parentElement.style.display !== 'none'); }
+
+    function openLightbox(index){
+      const visible = getVisibleItems();
+      const img = visible[index];
+      const jsonIndex = parseInt(img.dataset.index);
+      lbImage.src = img.src;
+      lbCaption.innerHTML = `${img.alt} <br><span style="color:#ccc; font-size:12px;">ID: ${String(galleryData[jsonIndex].id).padStart(3,'0')}</span>`;
+      currentIndex = index;
+      lightbox.classList.add('open');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeLightbox(){ lightbox.classList.remove('open'); document.body.style.overflow=''; }
+    function showPrev(){ const visible = getVisibleItems(); currentIndex = (currentIndex-1+visible.length)%visible.length; openLightbox(currentIndex); }
+    function showNext(){ const visible = getVisibleItems(); currentIndex = (currentIndex+1)%visible.length; openLightbox(currentIndex); }
+
+    allItems.forEach(img => img.addEventListener('click',()=>{ const index = getVisibleItems().indexOf(img); openLightbox(index); }));
+    lbClose.addEventListener('click', closeLightbox);
+    lbPrev.addEventListener('click', showPrev);
+    lbNext.addEventListener('click', showNext);
+    lightbox.addEventListener('click',(e)=>{ if(e.target===lightbox) closeLightbox(); });
+    document.addEventListener('keydown',(e)=>{ 
+      if(!lightbox.classList.contains('open')) return; 
+      if(e.key==='Escape') closeLightbox(); 
+      if(e.key==='ArrowLeft') showPrev(); 
+      if(e.key==='ArrowRight') showNext(); 
+    });
+
+    // Filter
+    const buttons = document.querySelectorAll('.gallery-btn');
+    const galleryItems = document.querySelectorAll('.gallery-item');
+    buttons.forEach(btn => {
+      btn.addEventListener('click', () => {
+        buttons.forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        const filter = btn.dataset.filter;
+        localStorage.setItem('galleryFilter', filter); // save last filter
+        galleryItems.forEach(item => {
+          item.style.display = (filter==='all'||item.dataset.category===filter)?'block':'none';
+        });
+      });
+    });
+  }
+</script>
+<script src="javascript/lang.js"></script>
+</body>
+</html>
