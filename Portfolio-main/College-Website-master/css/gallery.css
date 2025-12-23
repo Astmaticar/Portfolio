@@ -99,7 +99,7 @@ nav img{
     width: 90%;
     color: #fff;
     position:absolute;
-    top: 70%;
+    top: 30%;
     left: 50%;
     transform: translate(-50%,50%);
     text-align: center;
@@ -137,12 +137,10 @@ nav img{
 .icon{
     display:none;
 }
-
-
 /* Intro box */
 .text-box.small{
   width:90%;
-  margin:20px auto 10px;
+  margin:300px auto 10px;
   text-align:left;
 }
 .text-box.small h1{ margin:8px 0; font-size:34px; }
@@ -225,15 +223,49 @@ nav img{
   .gallery-grid{ grid-template-columns: repeat(2, 1fr); }
   .gallery-item img{ height:200px; }
 }
-@media (max-width: 600px){
-  nav{ width:95%; }
-  .icon{ display:block; }
-  .nav-links{ position:absolute; right:-220px; top:0; background:var(--accent); height:100vh; width:220px; transition: .3s; padding-top:40px; }
-  .nav-links ul{ flex-direction:column; gap:12px; padding-left:18px; }
-  .gallery-grid{ grid-template-columns: 1fr; }
-  .gallery-item img{ height:250px; }
-}
+@media (max-width: 700px) {
 
+    *{
+        overflow-x: hidden;
+        margin: 0;
+        padding: 0;
+    
+    }
+    #logo-img{
+        padding: 10px;
+    }
+    .text-box h1{
+       font-size: 30px;
+       font-weight: bold;
+    }
+    .text-box p{
+        font-size: 12px;
+    }
+    .nav-links ul li{
+        display: block;
+    }
+    .nav-links{
+        position: absolute;
+        background: #f44336;
+        height: 100vh;
+        width: 200px;
+        top: 0%;
+        right: -200px;
+        text-align: left;
+        z-index: 2;
+        transition: 1s;
+    }
+    .icon{
+        display: block;
+        color: #fff;
+        margin: 10px;
+        font-size: 25px;
+        cursor: pointer;
+    }
+    .nav-links ul{
+        padding: 30px;
+    }
+ }
 /* Gallery navbar styled like main nav */
 
 .gallery-navbar .gallery-btn {

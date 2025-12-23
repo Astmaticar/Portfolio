@@ -17,12 +17,51 @@ SET time_zone = "+00:00";
 /*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
 /*!40101 SET NAMES utf8mb4 */;
 
---
 -- Database: `portfolio_users`
 --
 
 -- --------------------------------------------------------
+CREATE TABLE gallery (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    src VARCHAR(255) NOT NULL,
+    caption TEXT NOT NULL,
+    category VARCHAR(50) NOT NULL
+);
 
+INSERT INTO gallery (src, caption, category) VALUES
+('image/gallery_pics/1.jpg', 'Sunset Over Mountains', 'coal'),
+('image/gallery_pics/2.jpg', 'Blooming Spring', 'aquarelle'),
+('image/gallery_pics/3.jpg', 'Coal Study 2022', 'aquarelle'),
+('image/gallery_pics/4.jpeg', 'Mystic Forest', 'coal'),
+('image/gallery_pics/5.jpg', 'Golden Horizon', 'aquarelle'),
+('image/gallery_pics/6.jpg', 'Morning Dew', 'oil'),
+('image/gallery_pics/7.jpg', 'Charcoal Sketch', 'oil'),
+('image/gallery_pics/8.jpeg', 'Evening Glow', 'coal'),
+('image/gallery_pics/9.jpg', 'Ocean Breeze', 'oil'),
+('image/gallery_pics/10.jpg', 'Sunlit Path', 'oil'),
+('image/gallery_pics/11.jpg', 'Coal Study 2014', 'oil'),
+('image/gallery_pics/12.jpg', 'Gentle River', 'aquarelle'),
+('image/gallery_pics/13.jpg', 'Winter Calm', 'aquarelle'),
+('image/gallery_pics/14.jpg', 'Autumn Leaves', 'oil'),
+('image/gallery_pics/15.jpg', 'Coal Study 2010', 'oil'),
+('image/gallery_pics/16.jpg', 'Misty Morning', 'oil'),
+('image/gallery_pics/17.jpg', 'Sunset Glory', 'coal'),
+('image/gallery_pics/18.jpg', 'Spring Fields', 'oil'),
+('image/gallery_pics/19.jpg', 'Coal Study 2006', 'oil'),
+('image/gallery_pics/20.jpg', 'Evening Mist', 'coal'),
+('image/gallery_pics/21.jpg', 'Ocean Waves', 'oil'),
+('image/gallery_pics/22.jpg', 'Morning Light', 'aquarelle'),
+('image/gallery_pics/23.jpg', 'Coal Study 2002', 'aquarelle'),
+('image/gallery_pics/24.jpg', 'Forest Walk', 'mixed'),
+('image/gallery_pics/25.jpg', 'Sunrise Glory', 'oil'),
+('image/gallery_pics/26.jpg', 'Aquarelle Study 1999', 'oil'),
+('image/gallery_pics/27.jpg', 'Coal Study 1998', 'aquarelle'),
+('image/gallery_pics/28.jpg', 'Mixed Media 1997', 'aquarelle'),
+('image/gallery_pics/29.jpg', 'Sunset Fields 1996', 'aquarelle'),
+('image/gallery_pics/30.jpg', 'Morning Mist 1995', 'aquarelle'),
+('image/gallery_pics/31.jpg', 'Coal Sketch 1994', 'aquarelle'),
+('image/gallery_pics/32.jpg', 'Mixed Study 1993', 'aquarelle'),
+('image/gallery_pics/33.jpeg', 'Final Coal Study 1992', 'coal');
 --
 -- Table structure for table `users`
 --

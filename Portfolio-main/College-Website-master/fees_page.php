@@ -1,9 +1,10 @@
 <?php
 session_start();
+require_once 'config.php'; // povezivanje s bazom
 
-// Ako korisnik nije ulogiran, preusmjeri na login.php
+// Ako korisnik nije ulogiran, preusmjeri na login
 if (!isset($_SESSION['user_id'])) {
-    $_SESSION['redirect_after_login'] = $_SERVER['REQUEST_URI']; // zapamti stranicu
+    $_SESSION['redirect_after_login'] = $_SERVER['REQUEST_URI'];
     header("Location: login.php?msg=login_required");
     exit();
 }
@@ -19,13 +20,11 @@ if (!isset($_SESSION['user_id'])) {
   <link rel="shortcut icon" href="image/logo.png" type="image/svg+xml">
   <link rel="stylesheet" href="css/fees_style.CSS">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-  <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
 </head>
 <body>
   <section class="header">
     <nav>
         <a href="index.php"><img src="image/logo.png" id="logo-img"></a>
-
         <div class="nav-links" id="navLinks">
             <span class="icon" onclick="hidemenu()">&#10005;</span>
             <ul>
@@ -37,138 +36,128 @@ if (!isset($_SESSION['user_id'])) {
                 <li><a href="Contact_page.html" data-translate="nav_contact">Contact</a></li>
                 <li><a href="#" id="lang-toggle">HR</a></li>
                 <li class="user-menu">
-                    <?php if(isset($_SESSION['user_id'])): ?>
-                        <a href="#">Welcome, <?php echo $_SESSION['user_name']; ?></a>
-                        <ul class="dropdown">
-                            <li><a href="logout.php">Logout</a></li>
-                        </ul>
-                    <?php else: ?>
-                        <a href="login.php">Login</a>
-                    <?php endif; ?>
+                    <a href="#">Welcome, <?php echo $_SESSION['user_name']; ?></a>
+                    <ul class="dropdown">
+                        <li><a href="logout.php">Logout</a></li>
+                    </ul>
                 </li>
             </ul>
         </div> 
         <span class="icon" onclick="showmenu()">&#9776;</span>
     </nav>
 
-  <div class="wrapper">
-    <div class="r_form_wrap">
+    <div class="wrapper">
+      <div class="r_form_wrap">
         <div class="title">
           <p data-translate="fees_page_header" id="header_fees">Purchase painting</p>
         </div>
-        
+
         <!-- Purchase form -->
         <div class="r_form">
-            <form method="post" onsubmit="sendmail(); reset(); return false;">
-                <div class="input_wrap">
-                    <label for="course" data-translate="fees_course_label">Course</label>
-                    <div class="input_item">
-                        <i class="fa fa-bars" aria-hidden="true" id="icon"></i>
-                        <select id="course" name="cars" class="input" required>
-                            <option value="select" data-translate="fees_select_technique">Select the technique</option>
-                            <option value="aquarelle" data-translate="fees_aquarelle">Aquarelle on paper</option>
-                            <option value="oil" data-translate="fees_oil">Oil on canvas/wood/cardboard</option>
-                            <option value="coal" data-translate="fees_coal">Coal on paper</option>
-                        </select>
-                    </div>
-                </div>
+          <form id="purchaseForm" onsubmit="return false;">
+            <div class="input_wrap">
+              <label for="course" data-translate="fees_course_label">Course</label>
+              <div class="input_item">
+                <i class="fa fa-bars" aria-hidden="true" id="icon"></i>
+                <select id="course" name="course" class="input" required>
+                  <option value="" data-translate="fees_select_technique">Select the technique</option>
+                  <option value="aquarelle" data-translate="fees_aquarelle">Aquarelle on paper</option>
+                  <option value="oil" data-translate="fees_oil">Oil on canvas/wood/cardboard</option>
+                  <option value="coal" data-translate="fees_coal">Coal on paper</option>
+                </select>
+              </div>
+            </div>
 
-                <div class="input_wrap">
-                    <label for="id" data-translate="fees_artwork_id_label">ID of artwork</label>
-                    <div class="input_item">
-                        <i class="fa fa-list-ol" aria-hidden="true" id="icon"></i>
-                        <input type="number" class="input" id="id" placeholder="Enter the last two ID digits">
-                    </div>
-                </div>
+            <div class="input_wrap">
+              <label for="id" data-translate="fees_artwork_id_label">ID of artwork</label>
+              <div class="input_item">
+                <i class="fa fa-list-ol" aria-hidden="true" id="icon"></i>
+                <input type="number" class="input" id="id" placeholder="Enter artwork ID" required>
+              </div>
+            </div>
 
-                <p data-translate="fees_artwork_id_detail" id="id_detail">Ex: 001 to enter the: 01</p>
-                <input type="button" class="button" data-translate="fees_get_button" value="Get" onclick="getInputValue()">
+            <p data-translate="fees_artwork_id_detail" id="id_detail">Enter the artwork ID as shown in gallery</p>
+            <input type="button" class="button" data-translate="fees_get_button" value="Get" onclick="getArtwork()">
 
-                <div class="input_wrap">
-                    <label for="demo" data-translate="fees_artwork_label">Artwork</label>
-                    <div class="input_item">
-                        <i class="fa fa-picture-o" id="icon"></i>
-                        <p id="demo" class="input"></p>
-                    </div>
-                </div>
+            <div class="input_wrap">
+              <label for="demo" data-translate="fees_artwork_label">Artwork</label>
+              <div class="input_item">
+                <i class="fa fa-picture-o" id="icon"></i>
+                <p id="demo" class="input"></p>
+              </div>
+            </div>
 
-                <div class="input_wrap">
-                    <label for="demo1" data-translate="fees_price_label">Price in euros</label>
-                    <div class="input_item">
-                        <i class="fa fa-credit-card" id="icon"></i>
-                        <p id="demo1" class="input"></p>
-                    </div>
-                </div>
+            <div class="input_wrap">
+              <label for="demo1" data-translate="fees_price_label">Price in euros</label>
+              <div class="input_item">
+                <i class="fa fa-credit-card" id="icon"></i>
+                <p id="demo1" class="input"></p>
+              </div>
+            </div>
 
-                <input type="button" class="button" data-translate="fees_pay_button" value="Pay" onclick="window.location.href='https://www.paypal.com/us/signin'">
-            </form>
+            <input type="button" class="button" data-translate="fees_pay_button" value="Pay" onclick="window.location.href='https://www.paypal.com/us/signin'">
+          </form>
         </div>
+      </div>
     </div>
-  </div>
   </section>
 
 <div class="none_div"></div>
 
 <script>
-let galleryData = [];
+var galleryData = [];
 
-// učitaj JSON
-fetch('Poppins/gallery_data.json')
-    .then(response => response.json())
-    .then(data => {
-        galleryData = data;
-        console.log("Gallery loaded:", galleryData);
-    })
-    .catch(error => console.error("JSON error:", error));
-</script>
-<script>
-function getInputValue() {
-    const technique = document.getElementById("course").value;
-    const artworkId = parseInt(document.getElementById("id").value);
+// Dohvati galeriju iz API-ja
+fetch('gallery_data.php')
+  .then(res => res.json())
+  .then(data => {
+    galleryData = data;
+    console.log("Gallery loaded:", galleryData);
+  })
+  .catch(err => console.error("API error:", err));
 
-    const artwork = galleryData.find(item =>
-        item.category === technique && item.id === artworkId
-    );
+function getArtwork() {
+  const technique = document.getElementById("course").value;
+  const artworkId = parseInt(document.getElementById("id").value, 10);
 
-    if (!artwork) {
-        document.getElementById("demo").innerText = "Artwork not found";
-        document.getElementById("demo1").innerText = "";
-        return;
-    }
+  if (!technique || isNaN(artworkId)) {
+    alert("Please select a technique and enter a valid ID");
+    return;
+  }
 
-    // Prikaži naziv slike
-    document.getElementById("demo").innerText = artwork.caption;
+  // Pronađi artwork u JSON-u iz API-ja
+  const artwork = galleryData.find(item =>
+    item.category === technique && Number(item.id) === artworkId
+  );
 
-    // Cijena po tehnici
-    let price = 0;
-    switch (artwork.category) {
-        case "coal":
-            price = 120;
-            break;
-        case "aquarelle":
-            price = 250;
-            break;
-        case "oil":
-            price = 1200;
-            break;
-    }
+  if (!artwork) {
+    document.getElementById("demo").innerText = "Artwork not found";
+    document.getElementById("demo1").innerText = "";
+    return;
+  }
 
-    document.getElementById("demo1").innerText = price + " €";
+  document.getElementById("demo").innerText = artwork.caption;
+
+  let price = 0;
+  switch (artwork.category) {
+    case "coal":
+      price = 120;
+      break;
+    case "aquarelle":
+      price = 250;
+      break;
+    case "oil":
+      price = 1200;
+      break;
+  }
+
+  document.getElementById("demo1").innerText = price + " €";
 }
-</script>
 
-<script>
-var navLinks= document.getElementById("navLinks");
-
-function showmenu(){
-    navLinks.style.right="0";
-}   
-function hidemenu(){
-    navLinks.style.right="-200px";
-}
-function sendmail(){
-    Email.send({}).then(message => alert("Thank you!"));
-}
+// Hamburger menu
+var navLinks = document.getElementById("navLinks");
+function showmenu(){ navLinks.style.right="0"; }
+function hidemenu(){ navLinks.style.right="-200px"; }
 </script>
 <script src="javascript/lang.js"></script>
 </body>

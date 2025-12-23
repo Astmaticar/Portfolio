@@ -42,7 +42,7 @@
   </div>
 
   <div class="gallery-grid" id="galleryGrid">
-    <!-- slike će se dinamički učitati ovdje -->
+    <!-- slike će se dinamički učitati ovdje iz baze preko API-ja -->
   </div>
 </main>
 
@@ -71,12 +71,25 @@
   let galleryData = [];
   let allItems = [];
 
-  // Load gallery JSON
-  // Load gallery JSON
-fetch('Poppins/gallery_data.json', {cache: "no-store"})
-  .then(res => res.json())
-  .then(data => {
-    galleryData = data;
+  // Učitavanje iz vlastitog PHP API-ja (iz baze)
+  fetch('gallery_data.php', {cache: "no-store"})
+    .then(res => {
+      if (!res.ok) {
+        throw new Error('API error: ' + res.status);
+      }
+      return res.json();
+    })
+    .then(data => {
+      galleryData = data;
+      renderGallery();
+    })
+    .catch(err => {
+      console.error('Greška pri učitavanju galerije iz API-ja:', err);
+      // Grid ostaje prazan ako ne radi (nema fallback slika)
+      document.getElementById('galleryGrid').innerHTML = '<p style="text-align:center; color:#999;">Galerija trenutno nije dostupna.</p>';
+    });
+
+  function renderGallery() {
     const grid = document.getElementById('galleryGrid');
     galleryData.forEach((imgData, index) => {
       const figure = document.createElement('figure');
@@ -99,7 +112,7 @@ fetch('Poppins/gallery_data.json', {cache: "no-store"})
     allItems = Array.from(document.querySelectorAll('.gallery-item img'));
     setupGallery();
 
-    // --- novi kod za hash ---
+    // Hash i localStorage filter
     let initialFilter = 'all';
     if(location.hash) {
       const hashFilter = location.hash.replace('#','');
@@ -110,8 +123,7 @@ fetch('Poppins/gallery_data.json', {cache: "no-store"})
       initialFilter = localStorage.getItem('galleryFilter') || 'all';
     }
     document.querySelector(`.gallery-btn[data-filter="${initialFilter}"]`)?.click();
-  });
-
+  }
 
   function setupGallery(){
     const lightbox = document.getElementById('lightbox');
@@ -159,7 +171,7 @@ fetch('Poppins/gallery_data.json', {cache: "no-store"})
         buttons.forEach(b => b.classList.remove('active'));
         btn.classList.add('active');
         const filter = btn.dataset.filter;
-        localStorage.setItem('galleryFilter', filter); // save last filter
+        localStorage.setItem('galleryFilter', filter);
         galleryItems.forEach(item => {
           item.style.display = (filter==='all'||item.dataset.category===filter)?'block':'none';
         });

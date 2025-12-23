@@ -8,7 +8,7 @@ session_start();
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
     <meta name="description" content="The Barbara Jurić at Sidhpur provide one of the earliest form of technical studies, which has been vital in setting up the standard of brilliance.">
     <meta name="keywords" content="Barbara Jurić,Collage">
-    <meta name="author" content="Jaydipsinh Solanki">
+    <meta name="author" content="Lana Gale">
 
     <title>Barbara Jurić</title>
     
