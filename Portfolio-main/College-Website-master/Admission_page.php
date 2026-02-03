@@ -1,7 +1,8 @@
 <?php
 session_start();
+require_once 'config.php'; // povezivanje s bazom
 
-// Ako korisnik nije ulogiran, preusmjeri na login.php
+// Ako korisnik nije ulogiran, preusmjeri na login
 if (!isset($_SESSION['user_id'])) {
     $_SESSION['redirect_after_login'] = $_SERVER['REQUEST_URI'];
     header("Location: login.php?msg=login_required");
@@ -15,179 +16,149 @@ if (!isset($_SESSION['user_id'])) {
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title data-translate="admission_page_title">Admission form - GGU</title>
+  <title data-translate="fees_page_title">Purchase a painting</title>
   <link rel="shortcut icon" href="image/logo.png" type="image/svg+xml">
-  <link rel="stylesheet" href="css/admission_style.css">
+  <link rel="stylesheet" href="css/fees_style.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-  <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
 </head>
 <body>
-
-<section class="header">
-  <nav>
-    <a href="index.php"><img src="image/logo.png" id="logo-img" alt="logo"></a>
-
-    <div class="nav-links" id="navLinks">
-      <span class="icon" onclick="hidemenu()">&#10005;</span>  
-      <ul>
-        <li><a href="index.php" data-translate="nav_home">Home</a></li>
-        <li><a href="#course_call" data-translate="nav_work">Work</a></li>
-        <li><a href="gallery.html" data-translate="nav_gallery">Gallery</a></li>
-        <li><a href="Admission_page.php" data-translate="nav_custom_order">Custom order</a></li>
-        <li><a href="fees_page.php" data-translate="nav_purchase">Purchase painting</a></li>
-        <li><a href="Contact_page.html" data-translate="nav_contact">Contact</a></li>
-        <li><a href="#" id="lang-toggle">HR</a></li>
-        <li class="user-menu">
-          <?php if(isset($_SESSION['user_id'])): ?>
-            <a href="#" data-translate="nav_welcome">Welcome, <?php echo $_SESSION['user_name']; ?></a>
-            <ul class="dropdown">
-              <li><a href="logout.php" data-translate="nav_logout">Logout</a></li>
+  <section class="header">
+    <nav>
+        <a href="index.php"><img src="image/logo.png" id="logo-img"></a>
+        <div class="nav-links" id="navLinks">
+            <span class="icon" onclick="hidemenu()">&#10005;</span>
+            <ul>
+                <li><a href="index.php" data-translate="nav_home">Home</a></li>
+                <li><a href="#course_call" data-translate="nav_work">Work</a></li>
+                <li><a href="gallery.html" data-translate="nav_gallery">Gallery</a></li>
+                <li><a href="Admission_page.php" data-translate="nav_custom_order">Custom order</a></li>
+                <li><a href="fees_page.php" data-translate="nav_purchase_painting">Purchase painting</a></li>
+                <li><a href="Contact_page.html" data-translate="nav_contact">Contact</a></li>
+                <li><a href="#" id="lang-toggle">HR</a></li>
+                <li class="user-menu">
+                    <a href="#">Welcome, <?php echo $_SESSION['user_name']; ?></a>
+                    <ul class="dropdown">
+                        <li><a href="logout.php">Logout</a></li>
+                    </ul>
+                </li>
             </ul>
-          <?php else: ?>
-            <a href="login.php" data-translate="nav_login">Login</a>
-          <?php endif; ?>
-        </li>
-      </ul>
-    </div> 
-    <span class="icon" onclick="showmenu()">&#9776;</span>
-  </nav>
+        </div> 
+        <span class="icon" onclick="showmenu()">&#9776;</span>
+    </nav>
 
-  <div class="wrapper">
-    <div class="r_form_wrap">
-      <div class="title">
-        <p data-translate="admission_title">Order a custom painting</p>
-      </div>
+    <div class="wrapper">
+      <div class="r_form_wrap">
+        <div class="title">
+          <p data-translate="fees_page_header" id="header_fees">Purchase painting</p>
+        </div>
 
-      <div class="r_form">
-        <form id="admissionForm" onsubmit="sendAdmission(); return false;">
-          <div class="input_wrap">
-            <label for="yourname" data-translate="admission_name_label">Your Name</label>
-            <div class="input_item">
-              <i class="fa fa-user" id="icon"></i>
-              <input type="text" name="your name" class="input" id="yourname" placeholder="Enter the name" required>
+        <!-- Purchase form -->
+        <div class="r_form">
+          <form id="purchaseForm" onsubmit="return false;">
+            <div class="input_wrap">
+              <label for="course" data-translate="fees_course_label">Course</label>
+              <div class="input_item">
+                <i class="fa fa-bars" aria-hidden="true" id="icon"></i>
+                <select id="course" name="course" class="input" required>
+                  <option value="" data-translate="fees_select_technique">Select the technique</option>
+                  <option value="aquarelle" data-translate="fees_aquarelle">Aquarelle on paper</option>
+                  <option value="oil" data-translate="fees_oil">Oil on canvas/wood/cardboard</option>
+                  <option value="coal" data-translate="fees_coal">Coal on paper</option>
+                </select>
+              </div>
             </div>
-          </div>
 
-          <div class="input_wrap">
-            <label for="emailaddress" data-translate="admission_email_label">Email Address</label>
-            <div class="input_item">
-              <i class="fa fa-envelope" id="icon"></i>
-              <input type="text" name="email address" class="input" id="emailaddress" placeholder="Enter email adress" required>
+            <div class="input_wrap">
+              <label for="id" data-translate="fees_artwork_id_label">ID of artwork</label>
+              <div class="input_item">
+                <i class="fa fa-list-ol" aria-hidden="true" id="icon"></i>
+                <input type="number" class="input" id="id" placeholder="Enter artwork ID" required>
+              </div>
             </div>
-          </div>
 
-          <div class="input_wrap">
-            <label for="phone" data-translate="admission_phone_label">Phone</label>
-            <div class="input_item">
-              <i class="fa fa-phone-square" id="icon"></i>
-              <input type="number" name="phone" class="input" id="phone" placeholder="Enter the Mobile number" required>
+            <p data-translate="fees_artwork_id_detail" id="id_detail">Enter the artwork ID as shown in gallery</p>
+            <input type="button" class="button" data-translate="fees_get_button" value="Get" onclick="getArtwork()">
+
+            <div class="input_wrap">
+              <label for="demo" data-translate="fees_artwork_label">Artwork</label>
+              <div class="input_item">
+                <i class="fa fa-picture-o" id="icon"></i>
+                <p id="demo" class="input"></p>
+              </div>
             </div>
-          </div>
 
-          <div class="input_wrap">
-            <label for="address" data-translate="admission_address_label">Address</label>
-            <div class="input_item">
-              <i class="fa fa-home" id="icon"></i>
-              <input type="text" name="address" class="input" id="address" placeholder="Enter the delivery address" required>
+            <div class="input_wrap">
+              <label for="demo1" data-translate="fees_price_label">Price in euros</label>
+              <div class="input_item">
+                <i class="fa fa-credit-card" id="icon"></i>
+                <p id="demo1" class="input"></p>
+              </div>
             </div>
-          </div>
 
-          <div class="input_wrap">
-            <label for="dob" data-translate="admission_dob_label">Wanted date of delivery</label>
-            <div class="input_item">
-              <i class="fa fa-calendar" id="icon"></i>
-              <input type="date" name="dob" class="input" id="dob" required>
-            </div>
-          </div>
-
-          <div class="input_wrap">
-            <label for="course" data-translate="admission_technique_label">Technique</label>
-            <div class="input_item">
-              <i class="fa fa-caret-square-o-down" aria-hidden="true" id="icon"></i>
-              <select id="course" name="cars" class="input" required>
-                <option value="select" data-translate="admission_select_technique">Select the technique</option>
-                <option value="Oil on wood" data-translate="admission_oil_wood">Oil on wood</option>
-                <option value="Oil on canvas" data-translate="admission_oil_canvas">Oil on canvas</option>
-                <option value="Oil on cardboard" data-translate="admission_oil_cardboard">Oil on cardboard</option>
-                <option value="Aquarelle on paper" data-translate="admission_aquarelle">Aquarelle on paper</option>
-                <option value="Coal on paper" data-translate="admission_coal">Coal on paper</option>
-              </select>
-            </div>
-          </div>
-
-          <div class="input_wrap">
-            <label for="file" data-translate="admission_reference_label">Reference</label>
-            <div class="input_item">
-              <input type="file" id="fileInput" accept="image/*" required>
-            </div>
-          </div>
-
-          <input type="submit" class="button" value="Send order" data-translate="admission_send_button">
-          <input type="reset" class="clear_ad" value="Clear" data-translate="admission_clear_button">
-        </form>
+            <input type="button" class="button" data-translate="fees_pay_button" value="Pay" onclick="window.location.href='https://www.paypal.com/us/signin'">
+          </form>
+        </div>
       </div>
     </div>
-  </div>
-</section>
+  </section>
 
 <div class="none_div"></div>
 
-<script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
 <script>
-    emailjs.init("VBKV3r6XaaFW3B8so");
-</script>
+var galleryData = [];
 
-<script>
-function sendAdmission() {
-    const fileInput = document.getElementById("fileInput");
-    const file = fileInput.files[0];
-    
-    if (!file) {
-        alert("Please upload a reference image!");
-        return;
-    }
-    
-    if (file.size > 2 * 1024 * 1024) {
-        alert("File is too large. Max 2MB.");
-        return;
-    }
+// Dohvati galeriju iz API-ja
+fetch('gallery_data.php')
+  .then(res => res.json())
+  .then(data => {
+    galleryData = data;
+    console.log("Gallery loaded:", galleryData);
+  })
+  .catch(err => console.error("API error:", err));
 
-    const reader = new FileReader();
-    reader.onload = function(event) {
-        const base64Image = event.target.result;
+function getArtwork() {
+  const technique = document.getElementById("course").value;
+  const artworkId = parseInt(document.getElementById("id").value, 10);
 
-        const params = {
-            from_name: document.getElementById("yourname").value,
-            from_email: document.getElementById("emailaddress").value,
-            phone: document.getElementById("phone").value,
-            address: document.getElementById("address").value,
-            dob: document.getElementById("dob").value,
-            technique: document.getElementById("course").value,
-            reference_image: base64Image
-        };
+  if (!technique || isNaN(artworkId)) {
+    alert("Please select a technique and enter a valid ID");
+    return;
+  }
 
-        emailjs.send("service_iuylq7d", "template_mvlogkj", params)
-        .then(() => {
-            alert("Order sent successfully!");
-            document.getElementById("admissionForm").reset();
-        }, (error) => {
-            console.log(error);
-            alert("Error sending order. Check console.");
-        });
-    };
+  // Pronađi artwork u JSON-u iz API-ja
+  const artwork = galleryData.find(item =>
+    item.category === technique && Number(item.id) === artworkId
+  );
 
-    reader.readAsDataURL(file);
+  if (!artwork) {
+    document.getElementById("demo").innerText = "Artwork not found";
+    document.getElementById("demo1").innerText = "";
+    return;
+  }
+
+  document.getElementById("demo").innerText = artwork.caption;
+
+  let price = 0;
+  switch (artwork.category) {
+    case "coal":
+      price = 120;
+      break;
+    case "aquarelle":
+      price = 250;
+      break;
+    case "oil":
+      price = 1200;
+      break;
+  }
+
+  document.getElementById("demo1").innerText = price + " €";
 }
-</script>
 
-<script>
+// Hamburger menu
 var navLinks = document.getElementById("navLinks");
 function showmenu(){ navLinks.style.right="0"; }
 function hidemenu(){ navLinks.style.right="-200px"; }
 </script>
-
-<!-- Lang.js must be included here -->
 <script src="javascript/lang.js"></script>
-
 </body>
 </html>
